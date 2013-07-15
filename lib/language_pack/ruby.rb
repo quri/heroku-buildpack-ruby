@@ -607,6 +607,40 @@ params = CGI.parse(uri.query || "")
 <% params.each do |key, value| %>
   <%= key %>: <%= value.first %>
 <% end %>
+
+<%
+`env | grep 'DATABASE_URL_'`.each_line do |line|
+  var_name, uri = line.split("=")
+  db_name = var_name.match(/DATABASE_URL_([A-Z]+)_URL/)[1].downcase
+  uri = URI.parse uri
+
+  db_adapter = uri.scheme
+  db_adapter = "postgresql" if db_adapter == "postgres"
+
+  db_database = (uri.path || "").split("/")[1]
+
+  db_username = uri.user
+  db_password = uri.password
+
+  db_host = uri.host
+  db_port = uri.port
+
+  db_params = CGI.parse(uri.query || "")
+%>
+
+  <%= db_name %>:
+    <%= attribute "adapter",  db_adapter %>
+    <%= attribute "database", db_database %>
+    <%= attribute "username", db_username %>
+    <%= attribute "password", db_password, true %>
+    <%= attribute "host",     db_host %>
+    <%= attribute "port",     db_port %>
+
+  <% db_params.each do |key, value| %>
+    <%= key %>: <%= value.first %>
+  <% end %>
+
+<% end %>
         DATABASE_YML
         end
       end
