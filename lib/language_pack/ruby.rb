@@ -611,7 +611,7 @@ params = CGI.parse(uri.query || "")
 <%
 `env | grep 'DATABASE_URL_'`.each_line do |line|
   var_name, uri = line.split("=")
-  db_name = var_name.match(/DATABASE_URL_([A-Z]+)/)[1].downcase
+  db_name = var_name.match(/DATABASE_URL_([a-z, _]+)/)[1]
   uri = URI.parse uri
 
   db_adapter = uri.scheme
