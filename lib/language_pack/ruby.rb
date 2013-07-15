@@ -628,13 +628,13 @@ params = CGI.parse(uri.query || "")
   db_params = CGI.parse(uri.query || "")
 %>
 
-  <%= db_name %>:
-    <%= attribute "adapter",  db_adapter %>
-    <%= attribute "database", db_database %>
-    <%= attribute "username", db_username %>
-    <%= attribute "password", db_password, true %>
-    <%= attribute "host",     db_host %>
-    <%= attribute "port",     db_port %>
+<%= db_name %>:
+  <%= attribute "adapter",  db_adapter %>
+  <%= attribute "database", db_database %>
+  <%= attribute "username", db_username %>
+  <%= attribute "password", db_password, true %>
+  <%= attribute "host",     db_host %>
+  <%= attribute "port",     db_port %>
 
   <% db_params.each do |key, value| %>
     <%= key %>: <%= value.first %>
